@@ -1,1 +1,30 @@
+public class Solution {
+    public double myPow(double x, int n) {
+        // Base / Corner Cases [00:11:46]
+        if (n == 0) return 1.0;
+        if (x == 0) return 0.0;
+        if (x == 1) return 1.0;
+        if (x == -1) return (n % 2 == 0) ? 1.0 : -1.0;
 
+        long binForm = n; // Use long to handle integer overflow for Integer.MIN_VALUE [00:09:03]
+
+        // Handle negative powers [00:10:43]
+        if (binForm < 0) {
+            x = 1 / x;
+            binForm = -binForm;
+        }
+
+        double ans = 1.0;
+
+        // Binary Exponentiation Loop [00:08:00]
+        while (binForm > 0) {
+            if (binForm % 2 == 1) { // If the last binary digit is 1
+                ans *= x;
+            }
+            x *= x;           // Square the base [00:08:31]
+            binForm /= 2;     // Shift right (divide power by 2) [00:08:42]
+        }
+
+        return ans;
+    }
+}
